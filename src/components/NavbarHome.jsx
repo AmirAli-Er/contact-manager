@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { NavLink } from 'react-router-dom';
+import SearchNavbar from './SearchNavbar';
 const NavbarHome = ()=>{
     return(
         <Navbar bg="dark" data-bs-theme="dark" expand="lg" className="bg-body-tertiary">
@@ -29,15 +30,7 @@ const NavbarHome = ()=>{
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
-          <Form className="d-flex ">
-            <Form.Control
-              type="search"
-              placeholder="جست و جوی مخاطبین"
-              className="me-2 display-1"
-              aria-label="Search"
-            />
-            <Button className='btn-font' variant="outline-success">بجو</Button>
-          </Form>
+          <SearchNavbar/>
         </Navbar.Collapse>
       </Container>
     </Navbar>

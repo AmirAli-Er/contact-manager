@@ -2,7 +2,11 @@ import { Button, Col, Row, Container } from "react-bootstrap"
 import ContactCard from "./ContactCard"
 import SpinnerPage from "../../Spinner"
 import { Link, Outlet } from "react-router-dom"
+import { useContext } from "react"
+import ContactContext from "../../context/ContactContext"
+
 const ContactSection = ({contacts, load, ShowModul, setContact, showDeleteMessage, setShowDeleteMessage})=>{
+    const {filteredUser, searchURL} = useContext(ContactContext)
     return(
         <>
             <div className="d-grid ">
@@ -17,6 +21,8 @@ const ContactSection = ({contacts, load, ShowModul, setContact, showDeleteMessag
                             <Container fluid='1rem'>
                                 <Row xs='1' sm='2' md='3' lg='4'  >
                                 {
+                                    filteredUser.length!=0  ?
+                                    filteredUser.map(item=><Col className='mt-5'><ContactCard showDeleteMessage={showDeleteMessage} setShowDeleteMessage={setShowDeleteMessage} contact={contacts} setContact={setContact} id={item.id} sub={item.sub} phoneNumber={item.phoneNumber} email={item.email} address={item.address} image={item.image} /></Col>):
                                     contacts.map(item=><Col className='mt-5'><ContactCard showDeleteMessage={showDeleteMessage} setShowDeleteMessage={setShowDeleteMessage} contact={contacts} setContact={setContact} id={item.id} sub={item.sub} phoneNumber={item.phoneNumber} email={item.email} address={item.address} image={item.image} /></Col>)
                                 }
                                 </Row>
