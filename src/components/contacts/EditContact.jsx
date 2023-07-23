@@ -3,7 +3,7 @@ import { editConatct, getCategories, getContact } from "../../services/service"
 import ContactForm from "./ContactForm"
 import { useNavigate, useParams } from "react-router-dom"
 
-const EditContact = ({ loading, setStatus, setReload }) =>{
+const EditContact = ({ setStatus, setReload }) =>{
     const { userId } = useParams()
     const nav = useNavigate()
     const [category, setCategory] = useState([])

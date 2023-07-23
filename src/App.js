@@ -50,6 +50,7 @@ function App() {
     <div className="App">
       <ContactContext.Provider value={{
         loading,
+        setContact,
         setStatus,
         getContact,
         setReload,
@@ -70,13 +71,13 @@ function App() {
         <h1 class="subject text-center">اپلیکیشن مدیریت مخاطبین</h1>
         {
           showDeleteMessage?
-          <DeleteAleart  />: null
+          <DeleteAleart  setShowDeleteMessage={setShowDeleteMessage} />: null
         }
         <Routes>
           <Route path='/' element={<Navigate to='/contacts'/>}/>
-          <Route path='/contacts' element={<ContactPage showDeleteMessage={showDeleteMessage} setShowDeleteMessage={setShowDeleteMessage} setContact={setContact} setStatus={setStatus} setReload={setReload} contact={getContact} status={loading} />}/>
-          <Route path='/contacts/:userId' element={<ContactView loading={loading} setStatus={setStatus}/>}/>
-          <Route path='/contacts/:userId/edit' element={<EditConatct setReload={setReload} loading={loading} setStatus={setStatus} />}/>
+          <Route path='/contacts' element={<ContactPage setReload={setReload}  />}/>
+          <Route path='/contacts/:userId' element={<ContactView />}/>
+          <Route path='/contacts/:userId/edit' element={<EditConatct setReload={setReload} setStatus={setStatus} />}/>
           
           <Route path='/contacts/bookmark' element={ <p>sadf</p> }/>
         </Routes>

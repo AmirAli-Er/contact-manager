@@ -1,6 +1,6 @@
 import { Alert } from "react-bootstrap"
 
-const DeleteAleart = () =>{
+const DeleteAleart = ({setShowDeleteMessage}) =>{
     return(
         <div >
             <Alert style={{ position:'absolute',
@@ -11,7 +11,8 @@ const DeleteAleart = () =>{
             paddingBottom:'1px' 
             }}
             variant="danger"
-            dismissible>
+            dismissible
+            onClose={()=>setShowDeleteMessage(false)}>
                 <p>مخاطب با موفقیت حذف شد</p>
             </Alert>
         </div>

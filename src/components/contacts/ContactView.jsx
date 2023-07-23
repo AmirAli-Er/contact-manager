@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import SpinnerPage from "../../Spinner"
 import ContactDatagrid from "./ContactDatagrid"
 
-const ContactView = ({loading, setStatus}) =>{
+const ContactView = () =>{
     const { userId } = useParams()
     const [state, setState]= useState(false)
     const [contact, setContact] = useState({})
@@ -22,9 +22,7 @@ const ContactView = ({loading, setStatus}) =>{
         get_contact()
         
     },[])
-    console.log(contact.image)
-    
-    
+
     return (
         <div className="text-center mt-2">
             {
@@ -32,7 +30,7 @@ const ContactView = ({loading, setStatus}) =>{
                     <>
                         <img className="rounded-2" width={'50%'} src={contact.image}/>
                         <section className="m-5">
-                            <ContactDatagrid contact={contact} setState={setState} />
+                            <ContactDatagrid contact={contact}  />
                         </section>
                     </>
                     

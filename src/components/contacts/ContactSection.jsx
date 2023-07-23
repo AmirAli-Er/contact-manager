@@ -5,25 +5,25 @@ import { Link, Outlet } from "react-router-dom"
 import { useContext } from "react"
 import ContactContext from "../../context/ContactContext"
 
-const ContactSection = ({contacts, load, ShowModul, setContact, showDeleteMessage, setShowDeleteMessage})=>{
-    const {filteredUser, searchURL} = useContext(ContactContext)
+const ContactSection = ({setLgShow})=>{
+    const {filteredUser, getContact, loading} = useContext(ContactContext)
     return(
         <>
             <div className="d-grid ">
                 
-                <Button onClick={()=>ShowModul(true)}  className="mx-5 mt-3" variant="primary" size="md">
+                <Button onClick={()=>setLgShow(true)}  className="mx-5 mt-3" variant="primary" size="md">
                     +
                 </Button>
                 
                 {
-                    load ? <SpinnerPage/> :(
+                    loading ? <SpinnerPage/> :(
                         <section className="mx-5 mt-3">
                             <Container fluid='1rem'>
                                 <Row xs='1' sm='2' md='3' lg='4'  >
                                 {
                                     filteredUser.length!=0  ?
-                                    filteredUser.map(item=><Col className='mt-5'><ContactCard showDeleteMessage={showDeleteMessage} setShowDeleteMessage={setShowDeleteMessage} contact={contacts} setContact={setContact} id={item.id} sub={item.sub} phoneNumber={item.phoneNumber} email={item.email} address={item.address} image={item.image} /></Col>):
-                                    contacts.map(item=><Col className='mt-5'><ContactCard showDeleteMessage={showDeleteMessage} setShowDeleteMessage={setShowDeleteMessage} contact={contacts} setContact={setContact} id={item.id} sub={item.sub} phoneNumber={item.phoneNumber} email={item.email} address={item.address} image={item.image} /></Col>)
+                                    filteredUser.map(item=><Col className='mt-5'><ContactCard  id={item.id} sub={item.sub} phoneNumber={item.phoneNumber} email={item.email} address={item.address} image={item.image} /></Col>):
+                                    getContact.map(item=><Col className='mt-5'><ContactCard   id={item.id} sub={item.sub} phoneNumber={item.phoneNumber} email={item.email} address={item.address} image={item.image} /></Col>)
                                 }
                                 </Row>
                             </Container>

@@ -3,8 +3,11 @@ import Button from 'react-bootstrap/Button';
 import { Col, Container, Row } from 'react-bootstrap';
 import { deleteConatct } from '../../services/service';
 import { Link, useNavigate } from 'react-router-dom';
-const ContactCard = ({sub, phoneNumber, address, email, id, setContact, contact, image, showDeleteMessage, setShowDeleteMessage}) =>{
+import { useContext } from 'react';
+import ContactContext from '../../context/ContactContext';
+const ContactCard = ({sub, phoneNumber, address, email, id, image}) =>{
     const navigate = useNavigate()
+    const {getContact, setContact, setShowDeleteMessage} = useContext(ContactContext)
     return(
         <Card >
             <Card.Img variant="top" height={'250px'} src={image} />
@@ -20,7 +23,7 @@ const ContactCard = ({sub, phoneNumber, address, email, id, setContact, contact,
                         <Col>
                             <Button onClick={()=>{
                                 deleteConatct(id)
-                                const contactsFiltered = contact.filter(item=>item.id!==id)
+                                const contactsFiltered = getContact.filter(item=>item.id!==id)
                                 setContact(contactsFiltered)
                                 setShowDeleteMessage(true)
                                 }} variant="danger">

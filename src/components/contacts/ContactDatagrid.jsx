@@ -3,7 +3,7 @@ import { Button, ListGroup } from "react-bootstrap"
 import { getCategory } from "../../services/service"
 import { Link } from "react-router-dom"
 
-const ContactDatagrid = ({ contact, setState }) =>{
+const ContactDatagrid = ({ contact }) =>{
     const [category, setCat] = useState('')
     useEffect(()=>{
         const getCat = async()=>{

@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ContactForm from './ContactForm';
 import { useNavigate } from 'react-router-dom';
 import { addConatct, getCategories } from '../../services/service';
+import { ContactValidation } from '../../validation/ContactValidation';
 
-const AddContact = ({show, setShow, status, setStatus, setReload}) =>{
+const AddContact = ({lgShow, setLgShow, setReload}) =>{
     const [category, setCategory] = useState([])
+    const [error, setError] = useState([])
     const [contact, setContact] = useState({
         sub:'',
         email:'',
@@ -37,10 +39,11 @@ const AddContact = ({show, setShow, status, setStatus, setReload}) =>{
     const SubmitForm = async(e)=>{
         e.preventDefault()
         try{
+            const userSchema = await ContactValidation.validate(contact, {abortEarly:false})
             const {status:STATUS, data:DATA} = await addConatct(contact)
+            
             if (STATUS===201){
-                setShow(false)
-                console.log(DATA)
+                setLgShow(false)
                 setContact({
                     sub:'',
                     email:'',
@@ -52,18 +55,18 @@ const AddContact = ({show, setShow, status, setStatus, setReload}) =>{
                 })
             }
         }catch(err){
-            console.log(err.message)
+            setError(err.inner)
         }
-        setReload((i)=>{console.log(i);return i+1})
+        setReload((i)=>{return i+1})
 
     }
-    console.log(contact)
+    
     return (
         <>
         <Modal
             size="lg"
-            show={show}
-            onHide={() => setShow(false)}
+            show={lgShow}
+            onHide={() => setLgShow(false)}
             aria-labelledby="example-modal-sizes-title-lg"
         >
             <Modal.Header closeButton>
@@ -72,7 +75,7 @@ const AddContact = ({show, setShow, status, setStatus, setReload}) =>{
             </Modal.Title>
             </Modal.Header>
             <Modal.Body className='bg-light'>
-                <ContactForm contact={contact} formHandler={SubmitForm} createContact={createContact} category={category}  setShow={setShow} status={status} setStatus={setStatus} />
+                <ContactForm error={error} contact={contact} formHandler={SubmitForm} createContact={createContact} category={category} />
             </Modal.Body>
         </Modal>
         </>
