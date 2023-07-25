@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import {Routes, Route, Navigate, useSearchParams} from 'react-router-dom'
 import ContactPage from './components/ContactPage';
 import axios from 'axios'
-import { getContacts } from './services/service';
+import { getAllBookmarks, getContacts } from './services/service';
 import AddContact from './components/contacts/AddContact';
 import ContactView from './components/contacts/ContactView';
 import EditConatct from './components/contacts/EditContact';
@@ -36,6 +36,11 @@ function App() {
     }
     data()
   }, [,reload])
+
+
+  
+  
+
   useEffect(()=>{
     const filtered_list = getContact.filter(item=>item.sub.startsWith(params.get('name')))
     if (filtered_list.length==0){
@@ -64,22 +69,21 @@ function App() {
         setParams,
         setFilteredUser,
         filteredUser,
-        nullFilter
+        nullFilter,
         
       }}>
         <NavbarHome/>
-        <h1 class="subject text-center">اپلیکیشن مدیریت مخاطبین</h1>
         {
           showDeleteMessage?
           <DeleteAleart  setShowDeleteMessage={setShowDeleteMessage} />: null
         }
+        
         <Routes>
           <Route path='/' element={<Navigate to='/contacts'/>}/>
-          <Route path='/contacts' element={<ContactPage setReload={setReload}  />}/>
+          <Route path='/contacts' element={<ContactPage contactsNumber={getContact.length} setReload={setReload}  />}/>
           <Route path='/contacts/:userId' element={<ContactView />}/>
-          <Route path='/contacts/:userId/edit' element={<EditConatct setReload={setReload} setStatus={setStatus} />}/>
-          
-          <Route path='/contacts/bookmark' element={ <p>sadf</p> }/>
+          <Route path='/contacts/:userId/edit' element={<EditConatct loading={loading} setReload={setReload} setStatus={setStatus} />}/>
+          <Route path="*" element={<h2 className="text-warning text-center mt-3 ">صفحه مورد نظر پیدا نشد!</h2>}/>
         </Routes>
       </ContactContext.Provider>
     </div>

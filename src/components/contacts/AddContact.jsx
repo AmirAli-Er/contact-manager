@@ -5,10 +5,9 @@ import ContactForm from './ContactForm';
 import { useNavigate } from 'react-router-dom';
 import { addConatct, getCategories } from '../../services/service';
 import { ContactValidation } from '../../validation/ContactValidation';
-
+import _ from 'lodash'
 const AddContact = ({lgShow, setLgShow, setReload}) =>{
     const [category, setCategory] = useState([])
-    const [error, setError] = useState([])
     const [contact, setContact] = useState({
         sub:'',
         email:'',
@@ -30,37 +29,25 @@ const AddContact = ({lgShow, setLgShow, setReload}) =>{
         }
         fetch()
     }, [])
-    function createContact(e){
-        setContact({
-            ...contact,[e.target.name]:e.target.value
-        })
+    
+    const SubmitForm = async(value)=>{
         
-    }
-    const SubmitForm = async(e)=>{
-        e.preventDefault()
         try{
-            const userSchema = await ContactValidation.validate(contact, {abortEarly:false})
-            const {status:STATUS, data:DATA} = await addConatct(contact)
+            
+            const {status:STATUS, data:DATA} = await addConatct(value)
             
             if (STATUS===201){
                 setLgShow(false)
-                setContact({
-                    sub:'',
-                    email:'',
-                    phoneNumber:'',
-                    address:'',
-                    job:'',
-                    image:'',
-                    category:''
-                })
+                
             }
         }catch(err){
-            setError(err.inner)
+            console.log(err.message)
         }
+        
         setReload((i)=>{return i+1})
-
+        setValidated(true)
     }
-    
+    const [validated, setValidated] = useState(false)
     return (
         <>
         <Modal
@@ -75,7 +62,7 @@ const AddContact = ({lgShow, setLgShow, setReload}) =>{
             </Modal.Title>
             </Modal.Header>
             <Modal.Body className='bg-light'>
-                <ContactForm error={error} contact={contact} formHandler={SubmitForm} createContact={createContact} category={category} />
+                <ContactForm contact={contact} formHandler={SubmitForm} category={category} />
             </Modal.Body>
         </Modal>
         </>

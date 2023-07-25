@@ -28,7 +28,7 @@ const ContactView = () =>{
             {
                 state?<SpinnerPage/>:(
                     <>
-                        <img className="rounded-2" width={'50%'} src={contact.image}/>
+                        <img className="rounded-2 mt-3" width={'400px'} height={'400px'}  src={contact.image}/>
                         <section className="m-5">
                             <ContactDatagrid contact={contact}  />
                         </section>

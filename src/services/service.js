@@ -36,3 +36,4 @@ export const addConatct = (contact)=>{
     const url_contact = `${URL}contacts`
     return axios.post(url_contact, contact)
 }
+

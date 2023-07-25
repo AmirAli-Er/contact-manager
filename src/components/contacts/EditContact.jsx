@@ -2,8 +2,10 @@ import { useEffect, useState } from "react"
 import { editConatct, getCategories, getContact } from "../../services/service"
 import ContactForm from "./ContactForm"
 import { useNavigate, useParams } from "react-router-dom"
+import { ContactValidation } from "../../validation/ContactValidation"
+import SpinnerPage from "../../Spinner"
 
-const EditContact = ({ setStatus, setReload }) =>{
+const EditContact = ({ setStatus, setReload, loading }) =>{
     const { userId } = useParams()
     const nav = useNavigate()
     const [category, setCategory] = useState([])
@@ -40,12 +42,11 @@ const EditContact = ({ setStatus, setReload }) =>{
             }
         }
         fetchData()
+        
     },[])
-    const editFormHandler = async( e ) => {
-        e.preventDefault()
+    const editFormHandler = async( value ) => {
         try{
-            console.log(`our contact=> ${contact}`)
-            const {status:STATUS} = await editConatct(userId, contact)
+            const {status:STATUS} = await editConatct(userId, value)
             nav('/')
             
         }catch(err){
@@ -53,25 +54,15 @@ const EditContact = ({ setStatus, setReload }) =>{
         }
         setReload((i)=>{console.log(i);return i+1})
     }
-    const createContact = (e) => {
-        setContact({
-            ...contact,[e.target.name]:e.target.value
-        })
-    }
     return(
         <>
-            <ContactForm createContact={createContact} editForm formHandler={editFormHandler} navigateAddress={'/'} color={'whitesmoke'} contact={contact} category={category}/>
+        {
+            loading?
+            <SpinnerPage/>:
+            <ContactForm  editForm formHandler={editFormHandler} color={'whitesmoke'} contact={contact} category={category}/>
+        }
+            
         </>
     )
 }
 export default EditContact
-// const formFields = [
-    //     {
-    //         label:'',
-    //         name,
-    //         value,
-    //         changed,
-    //         type,
-    //         placeholder,
-    //     }
-    // ]

@@ -4,13 +4,16 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import SearchNavbar from './SearchNavbar';
+import { useContext } from 'react';
+import ContactContext from '../context/ContactContext';
 const NavbarHome = ()=>{
+    const {setIsShowingBookmark} = useContext(ContactContext)
     return(
         <Navbar bg="dark" data-bs-theme="dark" expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="#">مخاطب</Navbar.Brand>
+        <Navbar.Brand href="#">اپلیکیشن مدیریت مخاطبین</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -18,17 +21,8 @@ const NavbarHome = ()=>{
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <NavLink to='/' style={({isActive})=>isActive?{color:'#D345', textDecoration:'none'}:null}>خانه</NavLink>
-            <NavDropdown title="ارتباط با ما" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#action3">ایمیل</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">
-                تلگرام
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action5">
-                صفحه ارتباط
-              </NavDropdown.Item>
-            </NavDropdown>
+            <Nav.Link><Link to="/" style={{ textDecoration:'none' }}>خانه</Link></Nav.Link>
+            
           </Nav>
           <SearchNavbar/>
         </Navbar.Collapse>

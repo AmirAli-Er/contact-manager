@@ -1,12 +1,13 @@
 import { Button, Col, Row, Container } from "react-bootstrap"
 import ContactCard from "./ContactCard"
 import SpinnerPage from "../../Spinner"
-import { Link, Outlet } from "react-router-dom"
+import { Link, Outlet, useLocation } from "react-router-dom"
 import { useContext } from "react"
 import ContactContext from "../../context/ContactContext"
 
 const ContactSection = ({setLgShow})=>{
     const {filteredUser, getContact, loading} = useContext(ContactContext)
+    
     return(
         <>
             <div className="d-grid ">
